@@ -32,11 +32,11 @@ public class CellSnapshot {
         return of(CellSnapshotStatus.NUMBER, nearbyLandMineCount);
     }
     public static CellSnapshot ofUnchecked() {
-        return of(CellSnapshotStatus.EMPTY, 0);
+        return of(CellSnapshotStatus.UNCHECKED, 0);
     }
 
-    public CellSnapshotStatus getStatus() {
-        return status;
+    public boolean isSameStatus(CellSnapshotStatus cellSnapshotStatus) {
+        return this.status == cellSnapshotStatus;
     }
 
     public int getNearbyLandMineCount() {

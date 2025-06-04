@@ -6,15 +6,12 @@ import java.util.stream.IntStream;
 import cleancode.minesweeper.tobe.GameBoard;
 import cleancode.minesweeper.tobe.GameExceptioin;
 import cleancode.minesweeper.tobe.cell.CellSnapshot;
-import cleancode.minesweeper.tobe.cell.CellSnapshotStatus;
 import cleancode.minesweeper.tobe.position.CellPosition;
+import cleancode.minesweeper.tobe.sign.CellSignFinder;
+import cleancode.minesweeper.tobe.sign.CellSignProvider;
 
 public class ConsoleOutputHandler implements OutputHandler {
-    private static final String EMPTY_SIGN = "■";
-    private static final String LAND_MINE_SIGN = "☼";
-    private static final String FLAG_SIGN = "⚑";
-    private static final String UNCHECKED_SIGN = "□";
-
+    private final CellSignFinder cellSignFinder = new CellSignFinder();
 
     @Override
     public void showGameStartComments() {
@@ -34,32 +31,13 @@ public class ConsoleOutputHandler implements OutputHandler {
                 CellPosition cellPosition = CellPosition.of(row, col);
 
                 CellSnapshot snapshot = board.getSnapshot(cellPosition);
-                String cellSign = decideCellSignFrom(snapshot);
+                //String cellSign = cellSignFinder.findCellSignFrom(cellPosition);
+                String cellSign = CellSignProvider.findCellSignFrom(snapshot);
 
                 System.out.print(cellSign + " ");
             }
             System.out.println();
         }
-    }
-
-    private String decideCellSignFrom(CellSnapshot snapshot) {
-        CellSnapshotStatus status = snapshot.getStatus();
-        if (status == CellSnapshotStatus.EMPTY) {
-            return EMPTY_SIGN;
-        }
-        if (status == CellSnapshotStatus.FLAG) {
-            return FLAG_SIGN;
-        }
-        if (status == CellSnapshotStatus.LAND_MINE) {
-            return LAND_MINE_SIGN;
-        }
-        if (status == CellSnapshotStatus.NUMBER) {
-            return String.valueOf(snapshot.getNearbyLandMineCount());
-        }
-        if (status == CellSnapshotStatus.UNCHECKED) {
-            return UNCHECKED_SIGN;
-        }
-        throw new IllegalArgumentException("확인할 수 없는 셀입니다.");
     }
 
     private String generateColAlphabets(GameBoard board) {
