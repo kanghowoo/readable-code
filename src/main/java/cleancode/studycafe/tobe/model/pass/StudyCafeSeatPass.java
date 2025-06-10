@@ -26,7 +26,7 @@ public class StudyCafeSeatPass implements StudyCafePass {
 
     public boolean isSameDurationType(StudyCafeLockerPass lockerPass) {
         return lockerPass.isSamePassType(this.passType)
-               && lockerPass.isSameDudration(this.duration);
+               && lockerPass.isSameDuration(this.duration);
     }
 
     public boolean isSamePassType(StudyCafePassType passType) {

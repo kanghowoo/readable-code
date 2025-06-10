@@ -23,7 +23,7 @@ public class StudyCafeLockerPass implements StudyCafePass {
         return this.passType == passType;
     }
 
-    public boolean isSameDudration(int duration) {
+    public boolean isSameDuration(int duration) {
         return this.duration == duration;
     }
 
