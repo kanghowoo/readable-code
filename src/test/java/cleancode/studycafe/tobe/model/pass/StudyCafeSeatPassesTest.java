@@ -1,12 +1,11 @@
 package cleancode.studycafe.tobe.model.pass;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -48,10 +47,11 @@ class StudyCafeSeatPassesTest {
     @Test
     @DisplayName("findPassBy()에 없는 타입 요청시 빈 리스트 반환")
     void findPassByReturnsEmptyIfNoneFound() {
-        var passes = List.of(StudyCafeLockerPass.of(StudyCafePassType.WEEKLY, 4, 150_000));
-        StudyCafeSeatPasses seatPasses = StudyCafeSeatPasses.of(passes);
+        StudyCafeSeatPass hourly = StudyCafeSeatPass.of(
+                StudyCafePassType.HOURLY, 3, 10_000, 0.1);
+        StudyCafeSeatPasses passes = StudyCafeSeatPasses.of(List.of(hourly));
 
-        var filtered = seatPasses.findPassBy(StudyCafePassType.WEEKLY);
-        assertTrue(filtered.isEmpty());
+        List<StudyCafeSeatPass> result = passes.findPassBy(StudyCafePassType.FIXED);
+        assertTrue(result.isEmpty());
     }
 }
